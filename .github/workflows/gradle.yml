@@ -37,4 +37,4 @@ jobs:
           docker build -t restservice:${{ github.sha }} --build-arg DB_HOST="${{ secrets.MYSQL_HOST }}" --build-arg DB_NAME="${{ secrets.MYSQL_DB }}" --build-arg DB_USER="${{ secrets.MYSQL_USER }}" --build-arg DB_PASS="${{ secrets.MYSQL_PASSWORD }}" --build-arg JAR_NAME="restservice-${{ github.sha }}-SNAPSHOT.jar" .
       - name: Push image
         run: |
-          docker push restservice:${{ github.sha }}
+          docker push bigstinky/restservice:${{ github.sha }}
