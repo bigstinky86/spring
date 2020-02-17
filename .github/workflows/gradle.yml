@@ -24,7 +24,7 @@ jobs:
     needs:
     runs-on: ubuntu-latest
     steps:
-      - name: Upload artifact
+      - name: Download artifact
         uses: actions/download-artifact@v1
         with:
           name: restservice-${{ github.sha }}-SNAPSHOT.jar
