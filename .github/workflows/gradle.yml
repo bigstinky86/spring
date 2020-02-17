@@ -16,4 +16,11 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
+      run: ./gradlew test
+      env:
+        MYSQL_HOST: ${secrets.MYSQL_HOST}
+        MYSQL_DB: ${secrets.MYSQL_DB}
+        MYSQL_USER: ${secrets.MYSQL_USER}
+        MYSQL_PASSSWORD: ${secrets.MYSQL_PASSWORD}
+    - name: Build with Gradle
       run: ./gradlew build
