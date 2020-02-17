@@ -1,7 +1,4 @@
-FROM centos:7
-
-RUN yum -y install java-1.8.0-openjdk
-RUN java -version
+FROM openjdk:8
 
 ARG JAR_NAME
 ARG DB_HOST
@@ -19,4 +16,4 @@ COPY ./$JAR_NAME /usr/src/$JAR_NAME
 
 WORKDIR /usr/src/
 
-CMD "java" "-jar" "$JAR_NAME"
+CMD java -jar $JAR_NAME
