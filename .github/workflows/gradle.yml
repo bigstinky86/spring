@@ -20,7 +20,7 @@ jobs:
     - name: Gradle build
       uses: eskatos/gradle-command-action@v1
       with:
-        arguments: build -Pversiontag=$CI_COMMIT_TAG
+        arguments: bootJar -Pversiontag=$CI_COMMIT_TAG
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
