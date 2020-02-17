@@ -1,6 +1,8 @@
 name: Java CI
 
-on: [push]
+on:
+  push:
+    branches: master
 
 jobs:
   build:
@@ -13,14 +15,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew test
-      env:
-        MYSQL_HOST: ${secrets.MYSQL_HOST}
-        MYSQL_DB: ${secrets.MYSQL_DB}
-        MYSQL_USER: ${secrets.MYSQL_USER}
-        MYSQL_PASSSWORD: ${secrets.MYSQL_PASSWORD}
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Gradle build
+      uses: eskatos/gradle-command-action@v1
+      with:
+        arguments: build -Pversiontag=$CI_COMMIT_TAG
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: restservice-$CI_COMMIT_TAG-SNAPSHOT.jar
+        path: build/libs/

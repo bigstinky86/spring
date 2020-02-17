@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.task'
-version = '0.0.1-SNAPSHOT'
+version = "${System.getProperty("versiontag")}-SNAPSHOT"
 sourceCompatibility = '1.8'
 
 repositories {
