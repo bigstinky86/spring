@@ -20,7 +20,8 @@ jobs:
           name: restservice-${{ github.sha }}-SNAPSHOT.jar
           path: build/libs/
 
-  dockerbuild:
+  dockerbuild: build
+    needs:
     runs-on: ubuntu-latest
     steps:
       - name: Upload artifact
