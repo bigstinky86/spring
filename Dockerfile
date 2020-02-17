@@ -1,6 +1,6 @@
 FROM openjdk:8
 
-ARG APP_VER
+ARG JAR_NAME
 ARG DB_HOST
 ARG DB_NAME
 ARG DB_USER
@@ -12,9 +12,9 @@ ENV MYSQL_PASSWORD ${DB_PASS}
 
 EXPOSE 8080
 
-COPY ./restservice-${APP_VER}.jar /usr/src/restservice-${APP_VER}.jar
+COPY ./${JAR_NAME} /usr/src/${JAR_NAME}
 
 WORKDIR /usr/src/
 
-ENTRYPOINT ["java", "-jar", "restservice-${app_ver}.jar"]
+ENTRYPOINT ["java", "-jar", "${JAR_NAME}"]
 
