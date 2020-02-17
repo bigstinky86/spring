@@ -29,6 +29,12 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: restservice-${{ github.sha }}-SNAPSHOT.jar
+      - name: Docker login
+        run:
+          docker login -u ${{ secrets.DOCKERHUB_LOGIN }} -p ${{ DOCKERHUB_PASS }}
       - name: Run docker builder
         run: |
-          docker build --build-arg MYSQL_HOST="${{ secrets.MYSQL_HOST }}" --build-arg MYSQL_DB="${{ secrets.MYSQL_DB }}" --build-arg MYSQL_USER="${{ secrets.MYSQL_USER }}" --build-arg MYSQL_PASSWORD="${{ secrets.MYSQL_PASSWORD }}" --build-arg JAR_NAME="restservice-${{ github.sha }}-SNAPSHOT.jar" .
+          docker build --build-arg DB_HOST="${{ secrets.MYSQL_HOST }}" --build-arg DB_NAME="${{ secrets.MYSQL_DB }}" --build-arg DB_USER="${{ secrets.MYSQL_USER }}" --build-arg DB_PASS="${{ secrets.MYSQL_PASSWORD }}" --build-arg JAR_NAME="restservice-${{ github.sha }}-SNAPSHOT.jar" .
+      - name: Push image
+        run: |
+          docker push restservice:${{ github.sha }}
