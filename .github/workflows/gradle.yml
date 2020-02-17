@@ -31,4 +31,4 @@ jobs:
           name: restservice-${{ github.sha }}-SNAPSHOT.jar
       - name: Run docker builder
         run: |
-          docker build -f Dockerfile --build-arg ["MYSQL_HOST=${{ secrets.MYSQL_HOST }}", "MYSQL_DB=${{ secrets.MYSQL_DB }}", "MYSQL_USER=${{ secrets.MYSQL_USER }}", "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}", "JAR_NAME=restservice-${{ github.sha }}-SNAPSHOT.jar"] .
+          docker build --build-arg ["MYSQL_HOST=${{ secrets.MYSQL_HOST }}", "MYSQL_DB=${{ secrets.MYSQL_DB }}", "MYSQL_USER=${{ secrets.MYSQL_USER }}", "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}", "JAR_NAME=restservice-${{ github.sha }}-SNAPSHOT.jar"] .
