@@ -13,11 +13,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Gradle build
-        run: ./gradlew bootJar -Dversiontag=${{ github.base_ref }}-${{ github.ref }}
+        run: ./gradlew bootJar -Dversiontag=${{ github.sha }}
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
-          name: restservice-${{ github.base_ref }}-${{ github.ref }}-SNAPSHOT.jar
+          name: restservice-${{ github.sha }}-SNAPSHOT.jar
           path: build/libs/
 
   dockerbuild:
@@ -26,11 +26,11 @@ jobs:
       - name: Upload artifact
         uses: actions/download-artifact@v1
         with:
-          name: restservice-${{ github.base_ref }}-${{ github.ref }}-SNAPSHOT.jar
+          name: restservice-${{ github.sha }}-SNAPSHOT.jar
       - name: Run docker builder
         uses: bigstinky86/spring@master
         with:
-          application-version: restservice-${{ github.base_ref }}-${{ github.ref }}-SNAPSHOT.jar
+          application-version: restservice-${{ github.sha }}-SNAPSHOT.jar
           database-host: ${{ secrets.MYSQL_HOST }}
           database-db: ${{ secrets.MYSQL_DB }}
           database-user: ${{ secrets.MYSQL_USER }}
