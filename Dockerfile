@@ -17,3 +17,4 @@ COPY ./restservice-${APP_VER}.jar /usr/src/restservice-${APP_VER}.jar
 WORKDIR /usr/src/
 
 ENTRYPOINT ["java", "-jar", "restservice-${app_ver}.jar"]
+
