@@ -20,8 +20,8 @@ jobs:
           name: restservice-${{ github.sha }}-SNAPSHOT.jar
           path: build/libs/
 
-  dockerbuild: build
-    needs:
+  dockerbuild:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
