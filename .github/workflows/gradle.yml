@@ -34,7 +34,7 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_LOGIN }} -p ${{ secrets.DOCKERHUB_PASS }}
       - name: Run docker builder
         run: |
-          docker build -t restservice:latest --build-arg DB_HOST="${{ secrets.MYSQL_HOST }}" --build-arg DB_NAME="${{ secrets.MYSQL_DB }}" --build-arg DB_USER="${{ secrets.MYSQL_USER }}" --build-arg DB_PASS="${{ secrets.MYSQL_PASSWORD }}" --build-arg JAR_NAME="restservice-${{ github.sha }}-SNAPSHOT.jar" .
+          docker build -t ${{ secrets.DOCKERHUB_LOGIN }}/restservice:latest --build-arg DB_HOST="${{ secrets.MYSQL_HOST }}" --build-arg DB_NAME="${{ secrets.MYSQL_DB }}" --build-arg DB_USER="${{ secrets.MYSQL_USER }}" --build-arg DB_PASS="${{ secrets.MYSQL_PASSWORD }}" --build-arg JAR_NAME="restservice-${{ github.sha }}-SNAPSHOT.jar" .
       - name: Push image
         run: |
-          docker push bigstinky/restservice:latest
+          docker push ${{ secrets.DOCKERHUB_LOGIN }}/restservice:latest
