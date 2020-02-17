@@ -1,0 +1,27 @@
+name: Build docker container
+inputs:
+  application-version:
+    description: Application version tag
+    required: true
+  database-host:
+    description: Database host
+    retuired: true
+  database-db:
+    description: Database name
+    retuired: true
+  database-user:
+    description: Database username
+    retuired: true
+  database-pass:
+    description: Database password
+    retuired: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    APP_VER: ${{ inputs.application-version }}
+    DB_HOST: ${{ inputs.atabase-host }}
+    DB_NAME: ${{ inputs.atabase-db }}
+    DB_USER: ${{ inputs.atabase-user }}
+    DB_PASS: ${{ inputs.atabase-pass }}

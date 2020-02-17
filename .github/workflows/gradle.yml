@@ -1,28 +1,29 @@
 name: Java CI
 
 on:
-  push:
+  pull-request:
     branches: master
+    types: closed
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Gradle build
-      uses: eskatos/gradle-command-action@v1
-      with:
-        arguments: bootJar -Pversiontag=$CI_COMMIT_TAG
+      run: ./gradlew bootJar -Dversiontag=${{ github.base_ref }}-${{ github.ref }}
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
-        name: restservice-$CI_COMMIT_TAG-SNAPSHOT.jar
+        name: restservice-${{ github.base_ref }}-${{ github.ref }}-SNAPSHOT.jar
         path: build/libs/
+    - name: Run docker builder
+      uses: bigstinky86/spring@master
+      with:
+        application-version: ${{ github.ref }}
+        database-host: ${{ secrets.MYSQL_HOST }}
+        database-db: ${{ secrets.MYSQL_DB }}
+        database-user: ${{ secrets.MYSQL_USER }}
+        database-pass: ${{secrets.MYSQL_PASSWORD }}
