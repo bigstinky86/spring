@@ -16,5 +16,4 @@ COPY ./$JAR_NAME /usr/src/$JAR_NAME
 
 WORKDIR /usr/src/
 
-CMD ["java", "-jar", $JAR_NAME]
-
+ENTRYPOINT ["java", "-jar", $JAR_NAME]
