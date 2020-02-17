@@ -29,10 +29,7 @@ jobs:
         with:
           name: restservice-${{ github.sha }}-SNAPSHOT.jar
       - name: Run docker builder
-        uses: bigstinky86/spring@master
-        with:
-          application-version: restservice-${{ github.sha }}-SNAPSHOT.jar
-          database-host: ${{ secrets.MYSQL_HOST }}
-          database-db: ${{ secrets.MYSQL_DB }}
-          database-user: ${{ secrets.MYSQL_USER }}
-          database-pass: ${{secrets.MYSQL_PASSWORD }}
+        run: |
+          docker build --build-arg MYSQL_HOST=${{ secrets.MYSQL_HOST }} --build-arg MYSQL_DB=${{ secrets.MYSQL_DB }} \
+          --build-arg MYSQL_USER=${{ secrets.MYSQL_USER }} --build-arg MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
+          --build-arg JAR_NAME=restservice-${{ github.sha }}-SNAPSHOT.jar
