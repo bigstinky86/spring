@@ -1,4 +1,8 @@
-FROM openjdk:8-jdk-slim
+FROM centos:7
+
+RUN yum -y install java-1.8.0-openjdk
+RUN alternatives --config java
+RUN java -version
 
 ARG JAR_NAME
 ARG DB_HOST
