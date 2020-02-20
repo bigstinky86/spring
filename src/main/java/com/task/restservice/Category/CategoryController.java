@@ -1,7 +1,7 @@
 package com.task.restservice.Category;
 
+import com.task.restservice.Page.PagesRepository;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,9 @@ public class CategoryController {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private PagesRepository pagesRepository;
 
     @PostMapping(path = "/categories")
     public @ResponseBody ResponseEntity<?> add(@RequestBody Category category) {
@@ -35,8 +38,8 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/categories/{id}")
-    public @ResponseBody Optional<Category> getByID(@PathVariable Integer id) {
-        return categoryRepository.findById(id);
+    public @ResponseBody Category getByID(@PathVariable Integer id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Category with id " + id.toString() + " not found"));
     }
 
     @DeleteMapping(path = "/categories/{id}/delete")
@@ -61,7 +64,6 @@ public class CategoryController {
         Category updatedCategory = categoryRepository.findById(id)
                 .map(category -> {
                     category.setName(categoryToUpdate.getName());
-                    category.setPage(categoryToUpdate.getPage());
                     return categoryRepository.save(category);
                 }).orElseGet(() -> {
                     categoryToUpdate.setId(id);

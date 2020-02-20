@@ -1,9 +1,13 @@
 package com.task.restservice.Category;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import com.task.restservice.Page.Pages;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -14,7 +18,10 @@ public class Category {
 
     private String name;
 
-    private Integer page;
+    @Fetch(value = FetchMode.SELECT)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+    private Set<Pages> pagesSet = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -32,12 +39,10 @@ public class Category {
         this.name = name;
     }
 
-    public Integer getPage() {
-        return page;
-    }
+    public Category() {}
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public Category(String name) {
+        this.name = name;
     }
 
 }
