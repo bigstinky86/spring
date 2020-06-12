@@ -51,4 +51,4 @@ jobs:
         run: ./gradlew bootJar -Dversiontag=v1
       - name: SonarQube scan
         run: |
-          docker run -e SONAR_HOST_URL=${{ secrets.SONAR_URL }} --user="$(id -u):$(id -g)" -it -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli -Dsonar.sources=src/ -Dsonar.projectKey=restservice -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.scm.provider=git -Dsonar.branch.name=${{ github.ref }}
+          docker run -e SONAR_HOST_URL=${{ secrets.SONAR_URL }} --user="$(id -u):$(id -g)" -i -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli -Dsonar.sources=src/ -Dsonar.projectKey=restservice -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.scm.provider=git -Dsonar.branch.name=${{ github.ref }}
