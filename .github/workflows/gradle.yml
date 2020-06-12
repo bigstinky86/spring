@@ -53,7 +53,13 @@ jobs:
       - name: SonarQube scan
         uses: bigstinky86/spring@develop
         with:
-          extra_args: "-Dsonar.projectKey=restservice -Dsonar.scm.provider=git -Dsonar.sources=src/main/java/ -Dsonar.language=java -Dsonar.java.binaries=build/classes/** -Dsonar.branch.name=${{ github.ref }}"
+          extra_args: >
+            -Dsonar.projectKey=restservice
+            -Dsonar.scm.provider=git
+            -Dsonar.sources=src/main/java/
+            -Dsonar.language=java
+            -Dsonar.java.binaries=build/classes/**
+            -Dsonar.branch.name=${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
