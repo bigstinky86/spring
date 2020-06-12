@@ -1,5 +1,13 @@
 name: SonarQube scanner run
 description: Runs SonarQube scanner wit additional srguments
+inputs:
+  extra_args:
+    description: Sonar scanner extra arguments
+    required: true
+    default: ""
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.extra_args }}
