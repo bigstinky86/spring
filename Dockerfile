@@ -1,21 +1,24 @@
-FROM openjdk:8
+FROM sonarsource/sonar-scanner-cli:4.3
 
-ARG JAR_NAME
-ARG DB_HOST
-ARG DB_NAME
-ARG DB_USER
-ARG DB_PASS
+LABEL version="0.0.1"
+LABEL repository="https://github.com/sonarsource/sonarcloud-github-action"
+LABEL homepage="https://github.com/sonarsource/sonarcloud-github-action"
+LABEL maintainer="SonarSource"
+LABEL "com.github.actions.name"="SonarCloud Scan"
+LABEL "com.github.actions.description"="Scan your code with SonarCloud to detect bugs, vulnerabilities and code smells in more than 25 programming languages."
+LABEL "com.github.actions.icon"="check"
+LABEL "com.github.actions.color"="green"
 
-ENV JAR_TO_RUN $JAR_NAME
-ENV MYSQL_HOST $DB_HOST
-ENV MYSQL_DB $DB_NAME
-ENV MYSQL_USER $DB_USER
-ENV MYSQL_PASSWORD $DB_PASS
+ARG SONAR_SCANNER_HOME=/opt/sonar-scanner
+ARG NODEJS_HOME=/opt/nodejs
 
-EXPOSE 8080/tcp
+ENV PATH=${PATH}:${SONAR_SCANNER_HOME}/bin:${NODEJS_HOME}/bin
 
-COPY ./$JAR_NAME /usr/src/
+WORKDIR /opt
 
-WORKDIR /usr/src/
+# https://help.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#user
+USER root
 
-CMD java -jar $JAR_TO_RUN
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

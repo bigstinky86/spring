@@ -51,5 +51,6 @@ jobs:
       - name: Gradle build
         run: ./gradlew clean build -Dversiontag=v1
       - name: SonarQube scan
-        run: |
-          docker run -e SONAR_HOST_URL=${{ secrets.SONAR_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} --user="$(id -u):$(id -g)" -i -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli '-Dsonar.projectKey=restservice -Dsonar.scm.provider=git -Dsonar.sources=src/main/java/ -Dsonar.language=java -Dsonar.java.binaries=build/classes/** -Dsonar.branch.name=${{ github.ref }}'
+        uses: bigstinky86/spring@develop
+        with:
+          extra-args: "-Dsonar.projectKey=restservice -Dsonar.scm.provider=git -Dsonar.sources=src/main/java/ -Dsonar.language=java -Dsonar.java.binaries=build/classes/** -Dsonar.branch.name=${{ github.ref }}"
