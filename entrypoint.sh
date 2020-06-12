@@ -21,4 +21,4 @@ if [[ -z "${SONARCLOUD_URL}" ]]; then
   SONARCLOUD_URL="https://sonarcloud.io"
 fi
 
-sonar-scanner -Dsonar.host.url=${SONARCLOUD_URL} "$@"
+sonar-scanner -Dsonar.host.url=${SONARCLOUD_URL} ${EXTRA_ARGS}
