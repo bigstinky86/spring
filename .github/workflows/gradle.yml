@@ -48,7 +48,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Gradle build
-        run: ./gradlew bootJar -Dversiontag=v1
+        run: ./gradlew clean build -Dversiontag=v1
       - name: SonarQube scan
         run: |
           docker run -e SONAR_HOST_URL=${{ secrets.SONAR_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} --user="$(id -u):$(id -g)" -i -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli
