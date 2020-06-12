@@ -49,8 +49,6 @@ jobs:
         run: chmod +x gradlew
       - name: Gradle build
         run: ./gradlew bootJar -Dversiontag=v1
-      - uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONARCLOUD_URL: ${{ secrets.SONAR_URL }}
+      - name: SonarQube scan
+        run: |
+          docker run -e SONAR_HOST_URL=${{ SONAR_URL }} --user="$(id -u):$(id -g)" -it -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli -Dsonar.sources=src/ -Dsonar.projectKey=restservice -Dsonar.scm.provider=git -Dsonar.branch.name=${{ github.ref }}
